@@ -29,11 +29,90 @@
       type="text/css"
     />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-     <!-- stylesheet  -->
-     <link rel="stylesheet" href="assets/style.css" />
+    <!-- stylesheet  -->
+    <link rel="stylesheet" href="assets/style.css" />
   </head>
   <body>
-    <h1 class="text-stone-400 bg-sky-200">Welcome to SwiftCart!</h1>
-    <p>Your one-stop e-commerce platform for all your shopping needs.</p>
+    <header class="">
+      <!-- Navbar -->
+      <div class="navbar bg-base-100 shadow-sm px-4 sticky top-0 z-50">
+        <div class="w-10/12 flex mx-auto">
+          <!-- Logo -->
+        <div class="navbar-start">
+          <!-- Mobile View -->
+          <div class="dropdown">
+            <label tabindex="0" class="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h8m-8 6h16"
+                />
+              </svg>
+            </label>
+
+            <!-- Mobile Menu -->
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 font-poppins"
+            >
+              <li><a class="hover:text-primary">Home</a></li>
+              <li><a class="hover:text-primary">Products</a></li>
+              <li><a class="hover:text-primary">About</a></li>
+              <li><a class="hover:text-primary">Contact</a></li>
+            </ul>
+          </div>
+
+          <!-- Logo -->
+          <a class="text-2xl font-bold text-primary font-raleway">
+            SwiftCart
+          </a>
+        </div>
+
+        <!-- Center Menu -->
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1 font-poppins">
+            <li><a class="hover:text-primary hover:font-semibold">Home</a></li>
+            <li><a class="hover:text-primary hover:font-semibold">Products</a></li>
+            <li><a class="hover:text-primary hover:font-semibold">About</a></li>
+            <li><a class="hover:text-primary hover:font-semibold">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Cart -->
+        <div class="navbar-end gap-2">
+          <!-- Cart Icon -->
+          <button class="btn btn-circle ">
+            <div class="indicator text-2xl">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-6 w-6"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h13M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
+                />
+              </svg>
+              <span class="badge badge-sm indicator-item">3</span>
+            </div>
+          </button>
+
+         
+        </div>
+        </div>
+      </div>
+    </header>
   </body>
 </html>
