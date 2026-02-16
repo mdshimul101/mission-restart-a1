@@ -3,7 +3,6 @@ const loadProducts = () => {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => displayProducts(data.slice(0, 3))); // first 3 products
-
 };
 
 // Display Products
@@ -14,7 +13,6 @@ const displayProducts = (products) => {
 
   // 2. loop products
   for (const product of products) {
-
     // 3. create element
     const card = document.createElement("div");
 
@@ -75,4 +73,3 @@ const displayProducts = (products) => {
 
 // Call loadProducts
 loadProducts();
-
