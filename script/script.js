@@ -52,8 +52,8 @@ const displayProducts = (products) => {
 
           <!-- Buttons -->
           <div class="flex gap-3 mt-4">
-            <button
-              class="flex-1 border border-gray-300 rounded-lg py-2 text-sm hover:bg-gray-100 transition">
+            <button onclick="loadProductDetails(${product.id})"
+              class="cursor-pointer flex-1 border border-gray-300 rounded-lg py-2 text-sm hover:bg-gray-100 transition">
               <i class="fa-regular fa-eye"></i> Details
             </button>
 
@@ -73,3 +73,68 @@ const displayProducts = (products) => {
 
 // Call loadProducts
 loadProducts();
+
+
+// Load Product Details
+const loadProductDetails = (id) => {
+  fetch(`https://fakestoreapi.com/products/${id}`)
+    .then((res) => res.json())
+    .then((data) => showProductModal(data));
+};
+
+// Show Product Modal
+const showProductModal = (product) => {
+  const modalContent = document.getElementById("modal-content");
+
+  modalContent.innerHTML = `
+    <div class="grid md:grid-cols-2 gap-6 items-center">
+
+      <!-- Image -->
+      <div class="bg-gray-100 p-6 rounded-lg flex justify-center">
+        <img src="${product.image}" class="h-64 object-contain">
+      </div>
+
+      <!-- Info -->
+      <div>
+
+        <span class="badge badge-primary mb-2">
+          ${product.category}
+        </span>
+
+        <h2 class="text-xl font-bold mb-2">
+          ${product.title}
+        </h2>
+
+        <p class="text-gray-600 text-sm mb-4">
+          ${product.description}
+        </p>
+
+        <div class="flex items-center gap-3 mb-4">
+          <span class="text-2xl font-bold text-indigo-600">
+            $${product.price}
+          </span>
+
+          <span class="text-sm text-gray-500">
+            <i class="fa-solid fa-star text-yellow-500"></i> ${product.rating.rate} (${product.rating.count})
+          </span>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex gap-3">
+          <button class="btn btn-primary flex-1">
+            <i class="fa-solid fa-cart-shopping"></i>
+            Add to Cart
+          </button>
+
+          <button class="btn btn-outline flex-1">
+            Buy Now
+          </button>
+        </div>
+
+      </div>
+    </div>
+  `;
+
+  // open modal
+  document.getElementById("productModal").showModal();
+};

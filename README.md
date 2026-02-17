@@ -14,3 +14,47 @@ Ans : async/await make asynchronous code look and behave like synchronous code, 
 
 Code looks synchronous and easier to understand, better error handling with try/catch , avoids callback hell or long .then() chains,
 works perfectly with multiple asynchronous calls
+
+5) Explain the concept of Scope in JavaScript (Global, Function, Block).
+Ans : Scope means , where a variable can be accessed in you code.
+
+Global Scope : A variable declared outside all functions and blocks belongs to the global scope. It can be accessed anywhere in the program.
+
+Example : 
+
+let name = "Shimul";
+
+function x() {
+  console.log(name);
+}
+
+x(); // Shimul
+console.log(name); // Shimul
+
+Accessible everywhere.
+
+Function Scope : Variables declared inside a function are only accessible inside that function.
+
+Example : 
+
+function test() {
+  let age = 25; // Function scope
+  console.log(age);
+}
+
+test(); // 25
+console.log(age); // undefined
+
+Outside the function variable does not exist.
+
+Block Scope : Variables declared inside { } are accessible only inside that block.
+
+Blocks include:
+
+if
+
+for
+
+while
+
+{} braces
