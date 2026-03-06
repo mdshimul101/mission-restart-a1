@@ -1,3 +1,5 @@
+let allProducts = [];
+
 // Load Categories
 const loadCategories = () => {
   fetch("https://fakestoreapi.com/products/categories")
@@ -53,8 +55,7 @@ const displayCategories = (categories) => {
   }
 };
 
-// Load Category Products
-loadCategories();
+
 
 const showLoader = () => {
   document.getElementById("loader").classList.remove("hidden");
@@ -71,6 +72,7 @@ const loadAllProducts = () => {
   fetch("https://fakestoreapi.com/products")
     .then((res) => res.json())
     .then((data) => {
+      allProducts = data; // store globally
       displayAllProducts(data);
       hideLoader();
     });
@@ -139,8 +141,8 @@ const displayAllProducts = (products) => {
               <i class="fa-regular fa-eye"></i> Details
             </button>
 
-            <button
-              class="flex-1 bg-indigo-600 text-white rounded-lg py-2 text-sm hover:bg-indigo-700 transition">
+            <button onclick="addToCart(${product.id})"
+              class="cursor-pointer flex-1 bg-indigo-600 text-white rounded-lg py-2 text-sm hover:bg-indigo-700 transition">
               <i class="fa-solid fa-cart-shopping"></i> Add
             </button>
           </div>
@@ -220,3 +222,158 @@ const showProductModal = (product) => {
   // open modal
   document.getElementById("productModal").showModal();
 };
+
+
+// Add To Cart
+const addToCart = (id) => {
+
+  // find clicked product
+  const product = allProducts.find(p => p.id === id);
+
+  // get existing cart
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  // check if product already exists
+  const existingProduct = cart.find(item => item.id === id);
+
+  if (existingProduct) {
+    existingProduct.quantity += 1;
+  } else {
+    product.quantity = 1;
+    cart.push(product);
+  }
+
+  // save again
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  updateCartCount();
+
+  // alert("Product Added to Cart ✅");
+};
+
+
+// Update Cart Count
+const updateCartCount = () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const totalQuantity = cart.reduce(
+    (sum, item) => sum + item.quantity,
+    0
+  );
+
+  document.getElementById("cart-count").innerText = totalQuantity;
+};
+
+// Open Cart Modal
+const openCartModal = () => {
+  document.getElementById("cart_modal").showModal();
+  loadCartItems();
+};
+
+// Display Cart Items
+const loadCartItems = () => {
+  const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  displayCartItems(cart);
+};
+
+// Display Cart Items
+const displayCartItems = (cart) => {
+  const container = document.getElementById("cart-items");
+  container.innerHTML = "";
+
+  let total = 0;
+
+  cart.forEach(product => {
+
+    total += product.price * product.quantity;
+
+    const div = document.createElement("div");
+
+    div.className =
+      "flex justify-between items-center bg-base-200 p-3 rounded-lg";
+
+    div.innerHTML = `
+      <div class="flex items-center gap-3">
+        <img src="${product.image}" class="w-14 h-14 object-contain">
+
+        <div>
+          <h4 class="font-semibold text-sm line-clamp-1">
+            ${product.title}
+          </h4>
+          <p class="text-xs text-gray-500">$${product.price}</p>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-2">
+
+        <button onclick="decreaseQty(${product.id})"
+          class="btn btn-xs">-</button>
+
+        <span>${product.quantity}</span>
+
+        <button onclick="increaseQty(${product.id})"
+          class="btn btn-xs">+</button>
+
+        <button onclick="removeItem(${product.id})"
+          class="btn btn-xs btn-error text-white">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+
+      </div>
+    `;
+
+    container.append(div);
+  });
+
+  document.getElementById("cart-total").innerText =
+    "$" + total.toFixed(2);
+};
+
+// Increase Quantity
+const increaseQty = (id) => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart.find(p => p.id === id).quantity++;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  loadCartItems();
+  updateCartCount();
+};
+
+// Decrease Quantity
+const decreaseQty = (id) => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  const item = cart.find(p => p.id === id);
+
+  if (item.quantity > 1) item.quantity--;
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  loadCartItems();
+  updateCartCount();
+};
+
+// Remove Item
+const removeItem = (id) => {
+  let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+  cart = cart.filter(item => item.id !== id);
+
+  localStorage.setItem("cart", JSON.stringify(cart));
+
+  loadCartItems();
+  updateCartCount();
+};
+
+// clear cart
+const clearCart = () => {
+  localStorage.removeItem("cart");
+  loadCartItems();
+  updateCartCount();
+};
+
+// Load Category Products
+loadCategories();
+updateCartCount(); // Initialize cart count on page load

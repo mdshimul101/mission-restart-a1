@@ -33,7 +33,7 @@
     <link rel="stylesheet" href="assets/style.css" />
   </head>
   <body>
-    <header class="">
+    <header class="fixed w-full z-50">
       <!-- Navbar -->
       <div class="navbar bg-base-100 shadow-sm px-4 sticky top-0 z-50">
         <div class="w-10/12 flex mx-auto">
@@ -109,7 +109,7 @@
           <!-- Cart -->
           <div class="navbar-end gap-2">
             <!-- Cart Icon -->
-            <button class="btn btn-circle">
+            <button onclick="openCartModal()" class="btn btn-circle">
               <div class="indicator text-2xl">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -125,8 +125,10 @@
                     d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h13M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
                   />
                 </svg>
-                <span class="badge badge-sm indicator-item text-blue-600"
-                  >3</span
+                <span
+                  id="cart-count"
+                  class="badge badge-sm indicator-item text-blue-600"
+                  >0</span
                 >
               </div>
             </button>
@@ -134,6 +136,51 @@
         </div>
       </div>
     </header>
+
+    <!-- Cart Modal -->
+    <dialog id="cart_modal" class="modal">
+      <div class="modal-box max-w-3xl">
+        <div class="font-bold text-xl mb-4 flex items-center space-x-3">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h13M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
+            />
+          </svg>
+          <h3>My Cart</h3>
+        </div>
+
+        <!-- Cart Items -->
+        <div
+          id="cart-items"
+          class="space-y-4 max-h-[400px] overflow-y-auto"
+        ></div>
+
+        <!-- Total -->
+        <div class="flex justify-between items-center mt-6 border-t pt-4">
+          <h3 class="font-semibold text-lg">Total:</h3>
+          <h3 id="cart-total" class="text-xl font-bold text-indigo-600">$0</h3>
+        </div>
+
+        <div class="modal-action">
+          <form method="dialog">
+            <button onclick="clearCart()" class="btn btn-error">
+              Clear Cart
+            </button>
+            <button class="btn">Close</button>
+          </form>
+        </div>
+      </div>
+    </dialog>
+
     <!--Banner Section -->
 
     <section class="relative h-[60vh] w-full">
